@@ -10,8 +10,24 @@ namespace JwtApp.Controllers;
 public class UserController : ControllerBase
 {
     [HttpGet("Admins")]
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public IActionResult AdminsEndpoint()
+    {
+        var currentUser = GetCurrentUser();
+        return Ok($"Hi, {currentUser.GivenName}, you are an {currentUser.Role}!");
+    }
+
+    [HttpGet("Sellers")]
+    [Authorize(Roles = "Seller")]
+    public IActionResult SellersEndpoint()
+    {
+        var currentUser = GetCurrentUser();
+        return Ok($"Hi, {currentUser.GivenName}, you are an {currentUser.Role}!");
+    }
+
+    [HttpGet("AdminsSellers")]
+    [Authorize(Roles = "Administrator,Seller")]
+    public IActionResult AdminsAndSellersEndpoint()
     {
         var currentUser = GetCurrentUser();
         return Ok($"Hi, {currentUser.GivenName}, you are an {currentUser.Role}!");
@@ -22,6 +38,7 @@ public class UserController : ControllerBase
     {
         return Ok("Hi, this is a public method!");
     }
+
 
     private UserModel GetCurrentUser()
     {

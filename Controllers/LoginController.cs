@@ -19,7 +19,7 @@ public class LoginController : ControllerBase
         _configuration = configuration;
     }
 
-    [AllowAnonymous]
+    // [AllowAnonymous]
     [HttpPost]
     public IActionResult Login([FromBody] UserLogin userLogin)
     {
